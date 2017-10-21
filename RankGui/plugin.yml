@@ -1,0 +1,10 @@
+name: RankGui
+main: me.spaicygaming.rankgui.Main
+version: 1.0
+author: SpaicyGaming
+description: Sell Ranks.
+commands:
+  special:
+    description: Open the Gui.
+  specialreload:
+    description: Reload the configuration.

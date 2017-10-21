@@ -1,0 +1,24 @@
+#RankGui plugin by SpaicyGaming.
+
+#Il costo DEVE essere un NUMERO INTERO e NON decimale.
+InventoryName: '&c&lRankGui'
+Messaggi:
+  AcquistoEffettuato: '&a&lRank Acquistato con successo!'
+  NoMoney: '&c&lNon Hai abbastanza soldi!'
+Ranks:
+  rank1:    
+    nomepex: rank1
+    nome: '&b&lRank1'
+    costo: 100
+  rank2:    
+    nomepex: rank2
+    nome: '&b&lRank2'
+    costo: 200
+  rank3:    
+    nomepex: rank3
+    nome: '&b&lRank3'
+    costo: 300
+  rank4:    
+    nomepex: rank4
+    nome: '&b&lRank4'
+    costo: 400
