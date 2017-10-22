@@ -1,27 +1,54 @@
-#RankGui plugin by SpaicyGaming.
+# RankGui plugin by SpaicyGaming.
 
 #Il costo DEVE essere un NUMERO INTERO e NON decimale.
-InventoryName: '&c&lRankGui'
+Inventory:
+  name: "&a&lBuy Ranks"
+  itemsMaterial: DIAMOND_CHESTPLATE
+  # multipli di 9
+  size: 45
+#
+# Gli oggetti nell'inventario
+Items:
+  rank1:    
+    pexName: rank1
+    name: '&b&lRank1'
+    cost: 100
+    # La posizione dell'inventario
+    invPosition: 18
+  rank2:    
+    pexName: rank2
+    name: '&b&lRank2'
+    cost: 1000
+    invPosition: 19
+  rank3:    
+    pexName: rank3
+    name: '&b&lRank3'
+    cost: 10000
+    invPosition: 20
+  rank4:    
+    pexName: rank4
+    name: '&b&lRank4'
+    cost: 100000
+    invPosition: 21
+  rank5:    
+    pexName: rank5
+    name: '&b&lRank5'
+    cost: 1000000
+    invPosition: 22
+#
+# I lores degli items nella gui
+# PlaceHolders:
+# {price} -> Il costo del  rank
+# {pex_name} -> Il nome del pex
+# {name} -> Il nome dell'item
+ItemsLores:
+- ""
+- "&bdamdoaid {pex_name}"
+- "&cdadada {price}$"
+
 Messages:
   prefix: "&7[&c&lRankGui&7] &r"
   AcquistoEffettuato: '&a&lRank Acquistato con successo!'
   noPerms: "&cMi spiace, non hai il permesso di farlo."
   NoMoney: '&c&lNon Hai abbastanza soldi!'
   wrongUsage: "&cUtilizzo corretto: /rankgui [reload]"
-Ranks:
-  rank1:    
-    nomepex: rank1
-    nome: '&b&lRank1'
-    costo: 100
-  rank2:    
-    nomepex: rank2
-    nome: '&b&lRank2'
-    costo: 200
-  rank3:    
-    nomepex: rank3
-    nome: '&b&lRank3'
-    costo: 300
-  rank4:    
-    nomepex: rank4
-    nome: '&b&lRank4'
-    costo: 400

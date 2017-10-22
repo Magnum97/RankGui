@@ -1,49 +1,39 @@
 package me.spaicygaming.rankgui;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.milkbowl.vault.economy.Economy;
 
 
-public class Main extends JavaPlugin {
+public class RankGui extends JavaPlugin {
 	
-	private static Main instance;
+	private static RankGui instance;
 	private Economy econ = null;
 	
 	private String prefix = c("Messages.prefix");
 	
 	public void onEnable(){
+		instance = this;
 		
 		if (!setupEconomy() ) {
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-		
-		instance = this;
-		PluginManager pm = getServer().getPluginManager();
-		Server server = getServer();
-		ConsoleCommandSender console = server.getConsoleSender();
-		
-	    console.sendMessage(ChatColor.GREEN + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-	    console.sendMessage(ChatColor.AQUA + "           Rank" + ChatColor.RED + "Gui");
-	    console.sendMessage(ChatColor.GOLD + "       Autore: SpaicyGaming");
-	    console.sendMessage(ChatColor.GREEN + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-	    
-	    pm.registerEvents(new InvClick(), this);
-	    InventoryGui.Gui();
 	    saveDefaultConfig();
+	    
+	    new InventoryGui();
+	    getServer().getPluginManager().registerEvents(new InvClickListener(), this);
+	    
+	    getLogger().info("RankGui has been enabled!");
 	}
 	
-	public static Main getInstance(){
+	public static RankGui getInstance(){
 		return instance;
 	}
 	
@@ -81,7 +71,7 @@ public class Main extends JavaPlugin {
 					p.sendMessage(getMessage("noPerms"));
 					return false;
 				}
-				p.openInventory(InventoryGui.rankgui);
+				p.openInventory(InventoryGui.getRankGuiInv());
 			}
 			// Reload
 			else if (args.length == 1 && args[0].equalsIgnoreCase("reload")){

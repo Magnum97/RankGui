@@ -14,10 +14,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
-public class InvClick implements Listener{
+public class InvClickListener implements Listener{
 	
 	ConsoleCommandSender console = Bukkit.getConsoleSender();
-	private Main main = Main.getInstance();
+	private RankGui main = RankGui.getInstance();
 	private Economy econ = main.getEconomy();
 	private String prefix = main.getPrefix();
 	
