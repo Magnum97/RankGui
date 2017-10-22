@@ -11,11 +11,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 public class InvClick implements Listener{
 	
 	ConsoleCommandSender console = Bukkit.getConsoleSender();
+	private Main main = Main.getInstance();
+	private Economy econ = main.getEconomy();
+	private String prefix = main.getPrefix();
 	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
@@ -24,7 +28,7 @@ public class InvClick implements Listener{
 		String name = p.getName();
 		String brname = "§6§l" + name + "§r";
 		
-		if (e.getInventory().getName().equals(ChatColor.translateAlternateColorCodes('&', Main.instance.getConfig().getString("InventoryName")))){
+		if (e.getInventory().getName().equals(ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("InventoryName")))){
 			e.setCancelled(true);
 			
 			if(e.getCurrentItem() == null || e.getCurrentItem().getType()==Material.AIR || !e.getCurrentItem().hasItemMeta()) {
@@ -35,18 +39,18 @@ public class InvClick implements Listener{
 			
 			p.getWorld().playSound(p.getLocation(), Sound.CLICK, 0.4F, 0.4F);
 			
-			String bought = Main.instance.prefix + ChatColor.translateAlternateColorCodes('&', Main.instance.getConfig().getString("Messaggi.AcquistoEffettuato"));
-			String nomoney = Main.instance.prefix + ChatColor.translateAlternateColorCodes('&', Main.instance.getConfig().getString("Messaggi.NoMoney"));
+			String bought = prefix + ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("Messaggi.AcquistoEffettuato"));
+			String nomoney = prefix + ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("Messaggi.NoMoney"));
 			
 			switch (e.getSlot()){
 			//Rank 1
 			case 10:
-				EconomyResponse buy1 = Main.econ.withdrawPlayer(p, Main.instance.getConfig().getInt("Ranks.rank1.costo"));
+				EconomyResponse buy1 = econ.withdrawPlayer(p, main.getConfig().getInt("Ranks.rank1.costo"));
 				if(buy1.transactionSuccess()) {
 					p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
 					p.getWorld().playSound(p.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2, 2);
-					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + Main.instance.getConfig().getString("Ranks.rank1.nomepex"));
-					Bukkit.broadcastMessage(Main.instance.prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', Main.instance.getConfig().getString("Ranks.rank1.nome")) + ChatColor.RESET + "!");
+					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + main.getConfig().getString("Ranks.rank1.nomepex"));
+					Bukkit.broadcastMessage(prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("Ranks.rank1.nome")) + ChatColor.RESET + "!");
 					p.sendMessage(bought);
 					p.closeInventory();					
 				}else {
@@ -56,12 +60,12 @@ public class InvClick implements Listener{
 				
 			//Rank 2
 			case 12:
-				EconomyResponse buy2 = Main.econ.withdrawPlayer(p, Main.instance.getConfig().getInt("Ranks.rank2.costo"));
+				EconomyResponse buy2 = econ.withdrawPlayer(p, main.getConfig().getInt("Ranks.rank2.costo"));
 				if(buy2.transactionSuccess()) {
 					p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
 					p.getWorld().playSound(p.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2, 2);
-					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + Main.instance.getConfig().getString("Ranks.rank2.nomepex"));
-					Bukkit.broadcastMessage(Main.instance.prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', Main.instance.getConfig().getString("Ranks.rank2.nome")) + ChatColor.RESET + "!");
+					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + main.getConfig().getString("Ranks.rank2.nomepex"));
+					Bukkit.broadcastMessage(prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("Ranks.rank2.nome")) + ChatColor.RESET + "!");
 					p.sendMessage(bought);
 					p.closeInventory();
 				}else {
@@ -71,12 +75,12 @@ public class InvClick implements Listener{
 				
 			//Rank 3
 			case 14:
-				EconomyResponse buy3 = Main.econ.withdrawPlayer(p, Main.instance.getConfig().getInt("Ranks.rank3.costo"));
+				EconomyResponse buy3 = econ.withdrawPlayer(p, main.getConfig().getInt("Ranks.rank3.costo"));
 				if(buy3.transactionSuccess()) {
 					p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
 					p.getWorld().playSound(p.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2, 2);
-					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + Main.instance.getConfig().getString("Ranks.rank3.nomepex"));
-					Bukkit.broadcastMessage(Main.instance.prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', Main.instance.getConfig().getString("Ranks.rank3.nome")) + ChatColor.RESET + "!");
+					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + main.getConfig().getString("Ranks.rank3.nomepex"));
+					Bukkit.broadcastMessage(prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("Ranks.rank3.nome")) + ChatColor.RESET + "!");
 					p.sendMessage(bought);
 					p.closeInventory();
 				}else {
@@ -86,12 +90,12 @@ public class InvClick implements Listener{
 				
 			//Rank 4
 			case 16:
-				EconomyResponse buy4 = Main.econ.withdrawPlayer(p, Main.instance.getConfig().getInt("Ranks.rank4.costo"));
+				EconomyResponse buy4 = econ.withdrawPlayer(p, main.getConfig().getInt("Ranks.rank4.costo"));
 				if(buy4.transactionSuccess()) {
 					p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
 					p.getWorld().playSound(p.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2, 2);
-					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + Main.instance.getConfig().getString("Ranks.rank4.nomepex"));
-					Bukkit.broadcastMessage(Main.instance.prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', Main.instance.getConfig().getString("Ranks.rank4.nome")) + ChatColor.RESET + "!");
+					Bukkit.dispatchCommand(console, "pex user " + name + " group add " + main.getConfig().getString("Ranks.rank4.nomepex"));
+					Bukkit.broadcastMessage(prefix + brname + " ha acquistato il Rank " + ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("Ranks.rank4.nome")) + ChatColor.RESET + "!");
 					p.sendMessage(bought);
 					p.closeInventory();
 				}else {

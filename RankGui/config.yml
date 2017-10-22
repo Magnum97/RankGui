@@ -2,9 +2,12 @@
 
 #Il costo DEVE essere un NUMERO INTERO e NON decimale.
 InventoryName: '&c&lRankGui'
-Messaggi:
+Messages:
+  prefix: "&7[&c&lRankGui&7] &r"
   AcquistoEffettuato: '&a&lRank Acquistato con successo!'
+  noPerms: "&cMi spiace, non hai il permesso di farlo."
   NoMoney: '&c&lNon Hai abbastanza soldi!'
+  wrongUsage: "&cUtilizzo corretto: /rankgui [reload]"
 Ranks:
   rank1:    
     nomepex: rank1

@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,17 +13,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.milkbowl.vault.economy.Economy;
 
 
-public class Main extends JavaPlugin implements Listener{
+public class Main extends JavaPlugin {
 	
-	public static Main instance;
-
-	String ver = getDescription().getVersion();
-	String prefix = "§8[§c§lRankGui§r§8]§r ";
-	static Economy econ = null;
+	private static Main instance;
+	private Economy econ = null;
+	
+	private String prefix = c("Messages.prefix");
 	
 	public void onEnable(){
-		
-		if(!new AdvancedLicense("#KEY", "#WEBSITE", this).register()) return;
 		
 		if (!setupEconomy() ) {
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -38,53 +34,24 @@ public class Main extends JavaPlugin implements Listener{
 		ConsoleCommandSender console = server.getConsoleSender();
 		
 	    console.sendMessage(ChatColor.GREEN + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-	    console.sendMessage(ChatColor.AQUA + "           Rank" + ChatColor.RED + "Gui " + ChatColor.GRAY + ver);
-	    console.sendMessage(ChatColor.GRAY + "         Cliente:" + ChatColor.AQUA + "EcoptPvP" );
+	    console.sendMessage(ChatColor.AQUA + "           Rank" + ChatColor.RED + "Gui");
 	    console.sendMessage(ChatColor.GOLD + "       Autore: SpaicyGaming");
 	    console.sendMessage(ChatColor.GREEN + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 	    
-	    pm.registerEvents(this, this);
 	    pm.registerEvents(new InvClick(), this);
 	    InventoryGui.Gui();
 	    saveDefaultConfig();
 	}
 	
+	public static Main getInstance(){
+		return instance;
+	}
+	
 	public void onDisable(){
-		getLogger().info("RankGui v" + ver + " correttamente disabilitato. Autore: SpaicyGaming");
+		getLogger().info("RankGui has been disabled.");
 	}
 	
-	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args){
-		if (alias.equalsIgnoreCase("special")) {
-			if (sender instanceof Player){
-				if (sender.hasPermission("rankgui.open")){
-					((Player) sender).openInventory(InventoryGui.rankgui);
-					
-				}else{
-					sender.sendMessage(prefix + ChatColor.RED + "Non hai i permessi per farlo!");
-				}
-				
-			} else{
-				getLogger().info("Questo comando può essere eseguito solo da un player!");
-			}
-		}
-		if (alias.equalsIgnoreCase("specialreload")){
-			if (sender.hasPermission("rankgui.reload")){
-				reloadConfig();
-				InventoryGui.Gui();
-				if (sender instanceof Player){
-					sender.sendMessage(prefix + "Config reloaded.");
-				}else {
-					getLogger().info("Config reloaded");
-				}	
-			}else{
-				sender.sendMessage(prefix + ChatColor.RED + "Non hai i permessi per farlo!");
-			}
-						
-		}
-		return false;
-	}
-	
-    private boolean setupEconomy() {
+	private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
         }
@@ -95,4 +62,60 @@ public class Main extends JavaPlugin implements Listener{
         econ = rsp.getProvider();
         return econ != null;
     }
+	
+	public Economy getEconomy(){
+		return econ;
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args){
+		if (alias.equalsIgnoreCase("rankgui")) {
+			if (!(sender instanceof Player)){
+				sender.sendMessage("Questo comando può essere eseguito solo da un player");
+				return false;
+			}
+			Player p = (Player)sender;
+			
+			// Opens Gui
+			if (args.length == 0){
+				if (!p.hasPermission("rankgui.open")){
+					p.sendMessage(getMessage("noPerms"));
+					return false;
+				}
+				p.openInventory(InventoryGui.rankgui);
+			}
+			// Reload
+			else if (args.length == 1 && args[0].equalsIgnoreCase("reload")){
+				if (!p.hasPermission("rankgui.reload")){
+					p.sendMessage(getMessage("noPerms"));
+					return false;
+				}
+				reloadConfig();
+			}
+			// Wrong args
+			else{
+				p.sendMessage(getMessage("wrongUsage"));
+				return false;
+			}
+		}
+		
+		return false;
+	}
+
+/*
+ * Chat Utils
+ */
+	
+	public String getPrefix(){
+		return prefix;
+	}
+	
+    public String c(String configPath){
+    	return ChatColor.translateAlternateColorCodes('&', getConfig().getString(configPath));
+    }
+    
+    public String getMessage(String configPath){
+    	return prefix + ChatColor.translateAlternateColorCodes('&', getConfig().getString("Messages.") + configPath);
+    }
+    
+    
 }
