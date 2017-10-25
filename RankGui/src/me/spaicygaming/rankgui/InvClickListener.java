@@ -12,6 +12,7 @@ import net.milkbowl.vault.economy.Economy;
 public class InvClickListener implements Listener{
 	
 	private RankGui main = RankGui.getInstance();
+	private RanksManager ranksManager = main.getRanksManager();
 	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
@@ -32,7 +33,7 @@ public class InvClickListener implements Listener{
 		}
 		
 		// Il nome della sezione (nel config.yml) in cui è contenuto l'item cliccato
-		String clickedPexName = InventoryGui.getRanksSlot().get(e.getSlot());
+		String clickedPexName = ranksManager.getRanksSlot().get(e.getSlot());
 		
 		// Cerca di acquistare il pex
 		tryTobuyRank(p, clickedPexName);
@@ -43,7 +44,7 @@ public class InvClickListener implements Listener{
 	}
 	
 	private void tryTobuyRank(Player p, String pexName){
-		int pexCost = InventoryGui.getRankPrice(pexName);
+		int pexCost = ranksManager.getRankPrice(pexName);
 		
 		if (econ().getBalance(p) < pexCost){
 			p.sendMessage(main.getMessage("notEnoughtMoney"));
@@ -54,7 +55,7 @@ public class InvClickListener implements Listener{
 		givePex(p, pexName);
 		
 		p.sendMessage(main.getMessage("pexBought")
-				.replace("{pex}", InventoryGui.getColoredRankName(pexName))
+				.replace("{pex}", ranksManager.getColoredRankName(pexName))
 				.replace("{cost}", String.valueOf(pexCost)));
 	}
 	

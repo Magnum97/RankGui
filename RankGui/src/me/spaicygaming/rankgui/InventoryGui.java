@@ -1,7 +1,6 @@
 package me.spaicygaming.rankgui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -15,15 +14,14 @@ public class InventoryGui {
 
 	private static RankGui main = RankGui.getInstance();
 	private static Inventory rankGuiInv;
-	// HashMap contenete ogni slot associato al rispettivo rank
-	private static HashMap<Integer, String> slotNumber = new HashMap<>();
+	private RanksManager ranksManager = main.getRanksManager();
 	
 	public InventoryGui() {
 		rankGuiInv = Bukkit.createInventory(null, main.getConfig().getInt("Inventory.size"), getRankInventoryTitle());
 		
 		for (String item : main.getConfig().getConfigurationSection("Items").getKeys(false)){
 			int itemPosition = getItemPosition(item);
-			slotNumber.put(itemPosition, item);
+			ranksManager.getRanksSlot().put(itemPosition, item);
 			rankGuiInv.setItem(itemPosition, itemBuilder(item));
 		}
 
@@ -41,49 +39,21 @@ public class InventoryGui {
 		ItemStack item = new ItemStack(Material.valueOf(main.getConfig().getString("Inventory.itemsMaterial")), 1);
 		ItemMeta itemMeta = item.getItemMeta();
 		
-		String coloredRankName = getColoredRankName(itemNumber);
+		String coloredRankName = ranksManager.getColoredRankName(itemNumber);
 		itemMeta.setDisplayName(coloredRankName);
 		
 		List<String> itemLore = new ArrayList<>();
 		for (String lore : main.getConfig().getStringList("ItemsLores")){
 			itemLore.add(ChatColor.translateAlternateColorCodes('&', lore)
-					.replace("{price}", String.valueOf(getRankPrice(itemNumber)))
+					.replace("{price}", String.valueOf(ranksManager.getRankPrice(itemNumber)))
 					.replace("{name}", coloredRankName)
-					.replace("{pex_name}", getPexName(itemNumber)));
+					.replace("{pex_name}", ranksManager.getPexName(itemNumber)));
 		}
 		itemMeta.setLore(itemLore);
 		
 		item.setItemMeta(itemMeta);
 		return item;
 	}
-	
-	/**
-	 * Ritorna il nome colorato del rank inserito
-	 * @param itemNumber -> Il nome della sezione dell'item nel config.yml
-	 * @return
-	 */
-	public static String getColoredRankName(String itemNumber){
-		return main.c("Items." + itemNumber + ".name");
-	}
-	
-	/**
-	 * Ritorna il pex corrispondente al rank inserito.
-	 * @param itemNumber -> Il nome della sezione dell'item nel config.yml
-	 * @return
-	 */
-	public static String getPexName(String itemNumber){
-		return main.getConfig().getString("Items." + itemNumber + ".pexName");
-	}
-	
-	/**
-	 * Ritorna il prezzo del rank inserito
-	 * @param itemNumber -> Il nome della sezione dell'item nel config.yml
-	 * @return
-	 */
-	public static int getRankPrice(String itemNumber){
-		return main.getConfig().getInt("Items." + itemNumber + ".cost");
-	}
-	
 	
 	/**
 	 * Ritorna la posizione impostata nel config dell'item inserito.
@@ -94,8 +64,6 @@ public class InventoryGui {
 		return main.getConfig().getInt("Items." + itemNumber + ".invPosition");
 	}
 	
-	public static HashMap<Integer, String> getRanksSlot(){
-		return slotNumber;
-	}
+
 	
 }

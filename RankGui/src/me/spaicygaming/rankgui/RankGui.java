@@ -14,6 +14,7 @@ public class RankGui extends JavaPlugin {
 	
 	private static RankGui instance;
 	private Economy econ = null;
+	private RanksManager ranksManager;
 	
 	private String prefix = c("Messages.prefix");
 	
@@ -35,6 +36,7 @@ public class RankGui extends JavaPlugin {
         }
 	    saveDefaultConfig();
 	    
+	    ranksManager = new RanksManager();
 	    new InventoryGui();
 	    getServer().getPluginManager().registerEvents(new InvClickListener(), this);
 	    
@@ -43,6 +45,10 @@ public class RankGui extends JavaPlugin {
 	
 	public static RankGui getInstance(){
 		return instance;
+	}
+	
+	public RanksManager getRanksManager(){
+		return ranksManager;
 	}
 	
 	public void onDisable(){
