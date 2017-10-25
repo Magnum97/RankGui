@@ -6,7 +6,10 @@ Inventory:
   itemsMaterial: DIAMOND_CHESTPLATE
   # multipli di 9
   size: 45
-#
+
+# Il comando che verraà eseguito dalla console all'acquisto di un rank
+dispatchedCommand: "pex user {player} group add {pex_name}"
+
 # Gli oggetti nell'inventario
 Items:
   rank1:    
@@ -43,12 +46,12 @@ Items:
 # {name} -> Il nome dell'item
 ItemsLores:
 - ""
-- "&bdamdoaid {pex_name}"
-- "&cdadada {price}$"
+- "&bRank: {pex_name}"
+- "&cPrezzo {price}$"
 
 Messages:
   prefix: "&7[&c&lRankGui&7] &r"
-  AcquistoEffettuato: '&a&lRank Acquistato con successo!'
   noPerms: "&cMi spiace, non hai il permesso di farlo."
-  NoMoney: '&c&lNon Hai abbastanza soldi!'
+  notEnoughtMoney: '&cMi spiace, non hai abbastanza soldi!'
   wrongUsage: "&cUtilizzo corretto: /rankgui [reload]"
+  pexBought: '&aComplimenti! Hai correttamente acquistato il rank {pex} &aper &l{cost}$!'

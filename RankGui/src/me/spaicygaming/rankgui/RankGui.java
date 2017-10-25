@@ -17,6 +17,14 @@ public class RankGui extends JavaPlugin {
 	
 	private String prefix = c("Messages.prefix");
 	
+	/*
+	 * Todo:
+	 * - check if the player already has that pex (using PermissionsEx's api)
+	 * - Add the rank using pex api and not throw command
+	 * - log file
+	 * - confirm gui
+	 */
+	
 	public void onEnable(){
 		instance = this;
 		
@@ -98,13 +106,13 @@ public class RankGui extends JavaPlugin {
 	public String getPrefix(){
 		return prefix;
 	}
-	
-    public String c(String configPath){
+
+	public String c(String configPath){
     	return ChatColor.translateAlternateColorCodes('&', getConfig().getString(configPath));
     }
     
     public String getMessage(String configPath){
-    	return prefix + ChatColor.translateAlternateColorCodes('&', getConfig().getString("Messages.") + configPath);
+    	return prefix + ChatColor.translateAlternateColorCodes('&', getConfig().getString("Messages." + configPath));
     }
     
     

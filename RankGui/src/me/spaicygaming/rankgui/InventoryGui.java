@@ -1,6 +1,7 @@
 package me.spaicygaming.rankgui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -14,20 +15,21 @@ public class InventoryGui {
 
 	private static RankGui main = RankGui.getInstance();
 	private static Inventory rankGuiInv;
+	// HashMap contenete ogni slot associato al rispettivo rank
+	private static HashMap<Integer, String> slotNumber = new HashMap<>();
 	
 	public InventoryGui() {
-		rankGuiInv = Bukkit.createInventory(null, main.getConfig().getInt("Inventory.size"), getRankInventoryName());
-		
-		System.out.println("fatto");
+		rankGuiInv = Bukkit.createInventory(null, main.getConfig().getInt("Inventory.size"), getRankInventoryTitle());
 		
 		for (String item : main.getConfig().getConfigurationSection("Items").getKeys(false)){
-			rankGuiInv.setItem(getItemPosition(item), itemBuilder(item));
-			System.out.println("ciclo");
+			int itemPosition = getItemPosition(item);
+			slotNumber.put(itemPosition, item);
+			rankGuiInv.setItem(itemPosition, itemBuilder(item));
 		}
 
 	}
 	
-	public static String getRankInventoryName(){
+	public static String getRankInventoryTitle(){
 		return main.c("Inventory.name");
 	}
 	
@@ -92,6 +94,8 @@ public class InventoryGui {
 		return main.getConfig().getInt("Items." + itemNumber + ".invPosition");
 	}
 	
-	
+	public static HashMap<Integer, String> getRanksSlot(){
+		return slotNumber;
+	}
 	
 }
