@@ -2,14 +2,22 @@ package me.spaicygaming.rankgui;
 
 import java.util.HashMap;
 
+import org.bukkit.entity.Player;
+
 public class RanksManager {
 	
 	private RankGui main = RankGui.getInstance();
 	// HashMap contenete ogni slot associato al rispettivo rank
 	private HashMap<Integer, String> slotNumber = new HashMap<>();
+	// HashMap in cui viene aggiunto il player e l'item cliccato nella gui principale prima di accedere alla confirm gui 
+	private HashMap<Player, String> clickedItem = new HashMap<>();
 	
 	public HashMap<Integer, String> getRanksSlot(){
 		return slotNumber;
+	}
+	
+	public HashMap<Player, String> getClickedRanks(){
+		return clickedItem;
 	}
 	
 	/**

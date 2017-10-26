@@ -49,9 +49,28 @@ ItemsLores:
 - "&bRank: {pex_name}"
 - "&cPrezzo {price}$"
 
+ConfirmGui:
+  title: "&b&lConferma Acquisto"
+  confirm:
+    name: "&a&lConferma"
+    lore:
+    - "&7Cliccami per confermare"
+    - "&7l'acquisto"
+  cancel:
+    name: "&c&lAnnulla"
+    lore:
+    - "&7Cliccami per annullare"
+    - "&7l'acquisto"
+  sign:
+    name: "&bStai per acquistare:"
+    lore:
+    - "&7Rank: {pex}"
+    - "&7Costo: {cost}"
+
 Messages:
   prefix: "&7[&c&lRankGui&7] &r"
   noPerms: "&cMi spiace, non hai il permesso di farlo."
   notEnoughtMoney: '&cMi spiace, non hai abbastanza soldi!'
   wrongUsage: "&cUtilizzo corretto: /rankgui [reload]"
+  actionCancelled: "&cAcquisto annullato con successo."
   pexBought: '&aComplimenti! Hai correttamente acquistato il rank {pex} &aper &l{cost}$!'

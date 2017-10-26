@@ -12,31 +12,63 @@ import net.milkbowl.vault.economy.Economy;
 public class InvClickListener implements Listener{
 	
 	private RankGui main = RankGui.getInstance();
-	private RanksManager ranksManager = main.getRanksManager();
+	private RanksManager manager = main.getRanksManager();
 	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
+		String invTitle = e.getInventory().getTitle();
+		String rankGuiTitle = InventoryGui.getRankInventoryTitle();
 		
-		if (!e.getInventory().getTitle().equals(InventoryGui.getRankInventoryTitle())){
+		if (!invTitle.equals(rankGuiTitle) && !invTitle.equals(ConfirmGui.getConfirmGuiTitle())){
 			return;
 		}
+		e.setCancelled(true);
 		
 		if (!(e.getWhoClicked() instanceof Player)){
 			return;
 		}
 		Player p = (Player)e.getWhoClicked();
 		
-		p.closeInventory();
-		
-		if (e.getCurrentItem() == null || e.getCurrentItem().getType() != Material.valueOf(main.getConfig().getString("Inventory.itemsMaterial"))){
+		if (e.getCurrentItem() == null || !e.getCurrentItem().hasItemMeta()){
+			p.closeInventory();
 			return;
 		}
 		
-		// Il nome della sezione (nel config.yml) in cui è contenuto l'item cliccato
-		String clickedPexName = ranksManager.getRanksSlot().get(e.getSlot());
+		/*
+		 * Main Gui
+		 */
+		if (invTitle.equals(rankGuiTitle)){
+			if (e.getCurrentItem().getType() != Material.valueOf(main.getConfig().getString("Inventory.itemsMaterial"))){
+				return;
+			}
+			// Il nome della sezione (nel config.yml) in cui è contenuto l'item cliccato
+			String clickedPexName = manager.getRanksSlot().get(e.getSlot());
+
+			manager.getClickedRanks().put(p, clickedPexName);
+			new ConfirmGui(p);
+
+			return;
+		}
+		/*
+		 * Confirm Gui
+		 */
+		if (e.getCurrentItem().getType() != Material.STAINED_CLAY){
+			return;
+		}
+		p.closeInventory();
 		
-		// Cerca di acquistare il pex
-		tryTobuyRank(p, clickedPexName);
+		// confirm item
+		if (e.getCurrentItem().getItemMeta().getDisplayName().equals(main.c("ConfirmGui.confirm.name"))){
+			// Cerca di acquistare il pex
+			tryTobuyRank(p, manager.getClickedRanks().get(p));
+		}
+		// cancel item
+		else{
+			p.sendMessage(main.getMessage("actionCancelled"));
+		
+		}
+		// Toglie il player dall'HashMap con il nome del pex cliccato
+		manager.getClickedRanks().remove(p);
 	}
 
 	private Economy econ(){
@@ -44,7 +76,7 @@ public class InvClickListener implements Listener{
 	}
 	
 	private void tryTobuyRank(Player p, String pexName){
-		int pexCost = ranksManager.getRankPrice(pexName);
+		int pexCost = manager.getRankPrice(pexName);
 		
 		if (econ().getBalance(p) < pexCost){
 			p.sendMessage(main.getMessage("notEnoughtMoney"));
@@ -55,7 +87,7 @@ public class InvClickListener implements Listener{
 		givePex(p, pexName);
 		
 		p.sendMessage(main.getMessage("pexBought")
-				.replace("{pex}", ranksManager.getColoredRankName(pexName))
+				.replace("{pex}", manager.getColoredRankName(pexName))
 				.replace("{cost}", String.valueOf(pexCost)));
 	}
 	

@@ -1,5 +1,8 @@
 package me.spaicygaming.rankgui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,11 +22,12 @@ public class RankGui extends JavaPlugin {
 	private String prefix = c("Messages.prefix");
 	
 	/*
+	 * [-] -> Done
 	 * Todo:
 	 * - check if the player already has that pex (using PermissionsEx's api)
 	 * - Add the rank using pex api and not throw command
 	 * - log file
-	 * - confirm gui
+	 * [-] confirm gui
 	 */
 	
 	public void onEnable(){
@@ -112,14 +116,28 @@ public class RankGui extends JavaPlugin {
 	public String getPrefix(){
 		return prefix;
 	}
+	
+	public String colorOnly(String message){
+		return ChatColor.translateAlternateColorCodes('&', message);
+	}
 
 	public String c(String configPath){
-    	return ChatColor.translateAlternateColorCodes('&', getConfig().getString(configPath));
+    	return colorOnly(getConfig().getString(configPath));
+    }
+	
+	public List<String> c(List<String> loresList){
+		List<String> coloredLores = new ArrayList<>();
+
+		for (String lore : loresList){
+			coloredLores.add(colorOnly(lore));
+		}
+    	return coloredLores;
     }
     
     public String getMessage(String configPath){
     	return prefix + ChatColor.translateAlternateColorCodes('&', getConfig().getString("Messages." + configPath));
     }
+    
     
     
 }
