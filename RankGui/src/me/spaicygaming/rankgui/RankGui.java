@@ -33,8 +33,9 @@ public class RankGui extends JavaPlugin {
 	public void onEnable(){
 		instance = this;
 		
-		if (!setupEconomy() ) {
-            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+		// Dependencies
+		if (!setupEconomy() || getServer().getPluginManager().getPlugin("PermissionsEx") == null) {
+            getLogger().severe(String.format("[%s] - Disabled due to no Vault and/or PermissionsEx dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }

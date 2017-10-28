@@ -1,6 +1,6 @@
 main: me.spaicygaming.rankgui.RankGui
 author: SpaicyGaming
-depend: [Vault]
+softdepend: [Vault, PermissionsEx]
 
 name: RankGui
 version: 1.2
