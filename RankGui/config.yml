@@ -65,12 +65,13 @@ ConfirmGui:
     name: "&bStai per acquistare:"
     lore:
     - "&7Rank: {pex}"
-    - "&7Costo: {cost}"
+    - "&7Costo: {cost}$"
 
 Messages:
   prefix: "&7[&c&lRankGui&7] &r"
   noPerms: "&cMi spiace, non hai il permesso di farlo."
   notEnoughtMoney: '&cMi spiace, non hai abbastanza soldi!'
   wrongUsage: "&cUtilizzo corretto: /rankgui [reload]"
+  alreadyOwn: "&cNon puoi acquistare questo rank, lo possiedi già!"
   actionCancelled: "&cAcquisto annullato con successo."
   pexBought: '&aComplimenti! Hai correttamente acquistato il rank {pex} &aper &l{cost}$!'

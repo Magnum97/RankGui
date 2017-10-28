@@ -21,7 +21,9 @@ public class InventoryGui {
 		
 		for (String item : main.getConfig().getConfigurationSection("Items").getKeys(false)){
 			int itemPosition = getItemPosition(item);
+			// Associa ogni config section al rispettivo slot
 			ranksManager.getRanksSlot().put(itemPosition, item);
+			// Imposta l'item nell'inventario
 			rankGuiInv.setItem(itemPosition, itemBuilder(item));
 		}
 
