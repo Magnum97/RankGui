@@ -24,9 +24,10 @@ public class RankGui extends JavaPlugin {
 	/*
 	 * [-] -> Done
 	 * Todo:
-	 * - check if the player already has that pex (using PermissionsEx's api)
+	 * [-] check if the player already has that pex (using PermissionsEx's api)
 	 * - Add the rank using pex api and not throw command
-	 * - log file
+	 * - particles/sound effects
+	 * - log file (not really needed)
 	 * [-] confirm gui
 	 */
 	

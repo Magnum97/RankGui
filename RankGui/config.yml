@@ -8,7 +8,7 @@ Inventory:
   size: 45
 
 # Il comando che verraà eseguito dalla console all'acquisto di un rank
-dispatchedCommand: "pex user {player} group add {pex_name}"
+dispatchedCommand: "lp user {player} parent add {pex_name}"
 
 # Gli oggetti nell'inventario
 Items:
