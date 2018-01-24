@@ -2,6 +2,7 @@ package me.spaicygaming.rankgui;
 
 import java.util.List;
 
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -108,6 +109,8 @@ public class InvClickListener implements Listener{
 		econ().withdrawPlayer(p, pexCost);
 		// Dà il pex
 		givePex(p, sectionName);
+		
+		p.getWorld().playEffect(p.getLocation(), Effect.NOTE, 2);
 		
 		p.sendMessage(main.getMessage("pexBought")
 				.replace("{pex}", manager.getColoredRankName(sectionName))
